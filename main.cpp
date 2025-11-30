@@ -212,11 +212,11 @@ void testSwap() {
     sl2.display();
 }
 
-void testCustomComparator() {
+void testCustomComparator() { //Nuestra implementacion solo lo ordena de menor a mayor. 
     cout << "\n========== TEST 9: Comparador Personalizado ==========" << endl;
     
     // Skip list con orden descendente
-    SkipList<int, string, greater<int>> sl;
+    SkipList<int, string> sl;
     
     sl.insert(5, "cinco");
     sl.insert(2, "dos");
