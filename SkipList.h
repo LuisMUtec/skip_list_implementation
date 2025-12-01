@@ -10,39 +10,40 @@
 #include <functional>
 #include <type_traits>
 
+using namespace std;
+
 /**
  * @brief Una implementación robusta y eficiente de Skip List
  * 
  * @tparam K Tipo de la clave (debe ser comparable con operator<)
  * @tparam V Tipo del valor
- * @tparam Compare Comparador para las claves (default: std::less<K>)
  * 
  * Características:
- * - Thread-safe random generation
+ * - Comparación simple con operator<
  * - Regla de los 5 (copy, move, destructor)
  * - Iteradores forward
  * - Exception safety
  * - Const-correctness
  * - Validación de parámetros
  */
-template <typename K, typename V, typename Compare = std::less<K>>
+template <typename K, typename V>
 class SkipList {
 private:
     // Verificar en tiempo de compilación que K es comparable
-    static_assert(std::is_copy_constructible<K>::value, "Key type must be copy constructible");
-    static_assert(std::is_copy_constructible<V>::value, "Value type must be copy constructible");
+    static_assert(is_copy_constructible<K>::value, "Key type must be copy constructible");
+    static_assert(is_copy_constructible<V>::value, "Value type must be copy constructible");
     
     // Nodo de la Skip List
     struct Node {
         K key;
         V value;
-        std::vector<Node*> forward;
+        vector<Node*> forward;
         
         Node(const K& k, const V& v, int level) 
             : key(k), value(v), forward(level + 1, nullptr) {}
         
         Node(K&& k, V&& v, int level) 
-            : key(std::move(k)), value(std::move(v)), forward(level + 1, nullptr) {}
+            : key(move(k)), value(move(v)), forward(level + 1, nullptr) {}
     };
     
     Node* header_;                      // Nodo cabecera
@@ -50,16 +51,13 @@ private:
     float probability_;                 // Probabilidad de promoción
     int maxLevel_;                      // Nivel máximo actual
     size_t size_;                       // Número de elementos
-    Compare comp_;                      // Comparador
     
-    // Generador aleatorio moderno (thread-local para thread-safety)
-    mutable std::mt19937 rng_;
-    mutable std::uniform_real_distribution<float> dist_;
+    mutable mt19937 rng_;
+    mutable uniform_real_distribution<float> dist_;
     
-    /**
-     * @brief Genera un nivel aleatorio para un nuevo nodo
-     * @return Nivel generado (0 a maxPossibleLevel_)
-     */
+    /*
+     Decide si se incrementa el nivel del nuevo nodo o se para de aumentar.
+    */
     int randomLevel() {
         int level = 0;
         while (dist_(rng_) < probability_ && level < maxPossibleLevel_) {
@@ -68,9 +66,6 @@ private:
         return level;
     }
     
-    /**
-     * @brief Libera toda la memoria de los nodos
-     */
     void freeList() {
         Node* current = header_->forward[0];
         while (current != nullptr) {
@@ -80,85 +75,38 @@ private:
         }
     }
     
-    /**
-     * @brief Copia todos los nodos de otra skip list
-     * @param other Skip list a copiar
+    /*
+     Modifica el Skip list actual para ser una copia
      */
     void copyFrom(const SkipList& other) {
-        // Copiar configuración
+    
         maxPossibleLevel_ = other.maxPossibleLevel_;
         probability_ = other.probability_;
         maxLevel_ = 0;
         size_ = 0;
         
-        // Crear nuevo header
+        
         header_ = new Node(K(), V(), maxPossibleLevel_);
         
-        // Copiar todos los elementos
+    
         Node* current = other.header_->forward[0];
         while (current != nullptr) {
-            insert(current->key, current->value);
+            insert(current->key, current->value); //Modificar insert en el aumento de tamano
             current = current->forward[0];
         }
     }
     
 public:
-    // ==================== ITERADOR ====================
+    // ITERADOR 
     
-    /**
-     * @brief Iterador forward constante
-     */
-    class ConstIterator {
-    private:
-        const Node* node_;
-        
-    public:
-        using iterator_category = std::forward_iterator_tag;
-        using value_type = std::pair<const K&, const V&>;
-        using difference_type = std::ptrdiff_t;
-        using pointer = const value_type*;
-        using reference = value_type;
-        
-        explicit ConstIterator(const Node* node) : node_(node) {}
-        
-        reference operator*() const {
-            return {node_->key, node_->value};
-        }
-        
-        ConstIterator& operator++() {
-            if (node_) node_ = node_->forward[0];
-            return *this;
-        }
-        
-        ConstIterator operator++(int) {
-            ConstIterator tmp = *this;
-            ++(*this);
-            return tmp;
-        }
-        
-        bool operator==(const ConstIterator& other) const {
-            return node_ == other.node_;
-        }
-        
-        bool operator!=(const ConstIterator& other) const {
-            return node_ != other.node_;
-        }
-        
-        const K& key() const { return node_->key; }
-        const V& value() const { return node_->value; }
-    };
-    
-    /**
-     * @brief Iterador forward mutable
-     */
     class Iterator {
     private:
         Node* node_;
         
     public:
-        using iterator_category = std::forward_iterator_tag;
-        using value_type = std::pair<K&, V&>;
-        using difference_type = std::ptrdiff_t;
+        using iterator_category = forward_iterator_tag;
+        using value_type = pair<K&, V&>;
+        using difference_type = ptrdiff_t;
         using pointer = value_type*;
         using reference = value_type;
         
@@ -190,87 +138,57 @@ public:
         const K& key() const { return node_->key; }
         V& value() { return node_->value; }
         const V& value() const { return node_->value; }
-        
-        operator ConstIterator() const { return ConstIterator(node_); }
     };
     
-    // ==================== CONSTRUCTORES ====================
-    
-    /**
-     * @brief Constructor principal
-     * @param maxLevel Nivel máximo posible (default: 16)
-     * @param probability Probabilidad de promoción (default: 0.5)
-     * @param comp Comparador personalizado
-     * @throws std::invalid_argument si los parámetros son inválidos
-     */
-    explicit SkipList(int maxLevel = 16, 
-                            float probability = 0.5f,
-                            const Compare& comp = Compare())
+
+    // CONSTRUCTORES   
+    explicit SkipList(int maxLevel = 0,  //Cuando se crea se inicia con nivel 0 
+                            float probability = 0.5f)
         : maxPossibleLevel_(maxLevel)
         , probability_(probability)
         , maxLevel_(0)
         , size_(0)
-        , comp_(comp)
-        , rng_(std::random_device{}())
+        , rng_(random_device{}())
         , dist_(0.0f, 1.0f) {
         
-        // Validar parámetros
-        if (maxLevel < 1 || maxLevel > 32) {
-            throw std::invalid_argument("maxLevel debe estar entre 1 y 32");
-        }
         if (probability <= 0.0f || probability >= 1.0f) {
-            throw std::invalid_argument("probability debe estar entre 0 y 1 (exclusivo)");
+            throw invalid_argument("probability debe estar entre 0 y 1 (exclusivo)");
         }
         
         // Crear nodo header
         header_ = new Node(K(), V(), maxPossibleLevel_);
     }
     
-    /**
-     * @brief Destructor
-     */
     ~SkipList() {
         clear();
         delete header_;
     }
     
-    /**
-     * @brief Constructor de copia
-     */
     SkipList(const SkipList& other) 
-        : comp_(other.comp_)
-        , rng_(std::random_device{}())
+        : rng_(random_device{}())
         , dist_(0.0f, 1.0f) {
         copyFrom(other);
     }
     
-    /**
-     * @brief Operador de asignación por copia
-     */
     SkipList& operator=(const SkipList& other) {
         if (this != &other) {
             // Limpiar datos actuales
             clear();
             delete header_;
             
-            // Copiar del otro
             copyFrom(other);
         }
         return *this;
     }
     
-    /**
-     * @brief Constructor de movimiento
-     */
     SkipList(SkipList&& other) noexcept
         : header_(other.header_)
         , maxPossibleLevel_(other.maxPossibleLevel_)
         , probability_(other.probability_)
         , maxLevel_(other.maxLevel_)
         , size_(other.size_)
-        , comp_(std::move(other.comp_))
-        , rng_(std::move(other.rng_))
-        , dist_(std::move(other.dist_)) {
+        , rng_(move(other.rng_))
+        , dist_(move(other.dist_)) {
         
         // Dejar other en estado válido
         other.header_ = new Node(K(), V(), other.maxPossibleLevel_);
@@ -293,9 +211,8 @@ public:
             maxPossibleLevel_ = other.maxPossibleLevel_;
             probability_ = other.probability_;
             size_ = other.size_;
-            comp_ = std::move(other.comp_);
-            rng_ = std::move(other.rng_);
-            dist_ = std::move(other.dist_);
+            rng_ = move(other.rng_);
+            dist_ = move(other.dist_);
             
             // Dejar other en estado válido
             other.header_ = new Node(K(), V(), other.maxPossibleLevel_);
@@ -305,22 +222,27 @@ public:
         return *this;
     }
     
-    // ==================== MÉTODOS DE INSERCIÓN ====================
+    // MÉTODOS DE INSERCIÓN
     
     /**
-     * @brief Inserta o actualiza un par clave-valor (copia)
-     * @param key Clave a insertar
-     * @param value Valor a insertar
-     * @return true si se insertó, false si se actualizó
+     * Inserta o actualiza un par clave-valor (copia)
+     * key Clave a insertar
+     * value Valor a insertar
+     * true si se insertó, false si se actualizó
      */
+
+    void nuevo_max_level(){
+        this->maxPossibleLevel_ = ceil(log(this->size_) / log(1/this->probability_));
+    }
+
     bool insert(const K& key, const V& value) {
-        std::vector<Node*> update(maxPossibleLevel_ + 1, nullptr);
+        vector<Node*> update(maxPossibleLevel_ + 1, nullptr);
         Node* current = header_;
         
         // Buscar la posición de inserción
         for (int i = maxLevel_; i >= 0; i--) {
             while (current->forward[i] != nullptr && 
-                   comp_(current->forward[i]->key, key)) {
+                current->forward[i]->key < key) {
                 current = current->forward[i];
             }
             update[i] = current;
@@ -329,19 +251,22 @@ public:
         current = current->forward[0];
         
         // Si la clave ya existe, actualizar el valor
-        if (current != nullptr && !comp_(current->key, key) && !comp_(key, current->key)) {
+        if (current != nullptr && (current->key == key)) {
             current->value = value;
             return false;  // Actualización
         }
         
         // Generar nivel aleatorio
-        int newLevel = randomLevel();
+        int newLevel = randomLevel(); //Puede ser mas grande que maxpossiblelevel?
         
-        // Actualizar maxLevel si es necesario
+        // Actualizar maxLevel si es necesario. Altura de Header actualizado
         if (newLevel > maxLevel_) {
+            
             for (int i = maxLevel_ + 1; i <= newLevel; i++) {
                 update[i] = header_;
+                header_->forward.push_back(nullptr); 
             }
+            
             maxLevel_ = newLevel;
         }
         
@@ -355,57 +280,18 @@ public:
         }
         
         size_++;
+        nuevo_max_level();
         return true;  // Inserción
     }
     
-    /**
-     * @brief Inserta o actualiza un par clave-valor (movimiento)
-     */
-    bool insert(K&& key, V&& value) {
-        std::vector<Node*> update(maxPossibleLevel_ + 1, nullptr);
-        Node* current = header_;
-        
-        for (int i = maxLevel_; i >= 0; i--) {
-            while (current->forward[i] != nullptr && 
-                   comp_(current->forward[i]->key, key)) {
-                current = current->forward[i];
-            }
-            update[i] = current;
-        }
-        
-        current = current->forward[0];
-        
-        if (current != nullptr && !comp_(current->key, key) && !comp_(key, current->key)) {
-            current->value = std::move(value);
-            return false;
-        }
-        
-        int newLevel = randomLevel();
-        
-        if (newLevel > maxLevel_) {
-            for (int i = maxLevel_ + 1; i <= newLevel; i++) {
-                update[i] = header_;
-            }
-            maxLevel_ = newLevel;
-        }
-        
-        Node* newNode = new Node(std::move(key), std::move(value), newLevel);
-        
-        for (int i = 0; i <= newLevel; i++) {
-            newNode->forward[i] = update[i]->forward[i];
-            update[i]->forward[i] = newNode;
-        }
-        
-        size_++;
-        return true;
-    }
+    
     
     /**
      * @brief Construye e inserta in-place (C++11 emplace)
      */
     template<typename... Args>
     bool emplace(const K& key, Args&&... args) {
-        return insert(key, V(std::forward<Args>(args)...));
+        return insert(key, V(forward<Args>(args)...));
     }
     
     // ==================== MÉTODOS DE BÚSQUEDA ====================
@@ -421,14 +307,14 @@ public:
         
         for (int i = maxLevel_; i >= 0; i--) {
             while (current->forward[i] != nullptr && 
-                   comp_(current->forward[i]->key, key)) {
+                   current->forward[i]->key < key) {
                 current = current->forward[i];
             }
         }
         
         current = current->forward[0];
         
-        if (current != nullptr && !comp_(current->key, key) && !comp_(key, current->key)) {
+        if (current != nullptr && !(current->key < key) && !(key < current->key)) {
             value = current->value;
             return true;
         }
@@ -453,18 +339,18 @@ public:
         
         for (int i = maxLevel_; i >= 0; i--) {
             while (current->forward[i] != nullptr && 
-                   comp_(current->forward[i]->key, key)) {
+                   current->forward[i]->key < key) {
                 current = current->forward[i];
             }
         }
         
         current = current->forward[0];
         
-        if (current != nullptr && !comp_(current->key, key) && !comp_(key, current->key)) {
+        if (current != nullptr && !(current->key < key) && !(key < current->key)) {
             return current->value;
         }
         
-        throw std::out_of_range("Clave no encontrada en SkipList");
+        throw out_of_range("Clave no encontrada en SkipList");
     }
     
     /**
@@ -475,18 +361,18 @@ public:
         
         for (int i = maxLevel_; i >= 0; i--) {
             while (current->forward[i] != nullptr && 
-                   comp_(current->forward[i]->key, key)) {
+                   current->forward[i]->key < key) {
                 current = current->forward[i];
             }
         }
         
         current = current->forward[0];
         
-        if (current != nullptr && !comp_(current->key, key) && !comp_(key, current->key)) {
+        if (current != nullptr && !(current->key < key) && !(key < current->key)) {
             return current->value;
         }
         
-        throw std::out_of_range("Clave no encontrada en SkipList");
+        throw out_of_range("Clave no encontrada en SkipList");
     }
     
     /**
@@ -494,11 +380,11 @@ public:
      */
     V& operator[](const K& key) {
         Node* current = header_;
-        std::vector<Node*> update(maxPossibleLevel_ + 1, nullptr);
+        vector<Node*> update(maxPossibleLevel_ + 1, nullptr);
         
         for (int i = maxLevel_; i >= 0; i--) {
             while (current->forward[i] != nullptr && 
-                   comp_(current->forward[i]->key, key)) {
+                   current->forward[i]->key < key) {
                 current = current->forward[i];
             }
             update[i] = current;
@@ -507,7 +393,7 @@ public:
         current = current->forward[0];
         
         // Si existe, retornar referencia al valor
-        if (current != nullptr && !comp_(current->key, key) && !comp_(key, current->key)) {
+        if (current != nullptr && !(current->key < key) && !(key < current->key)) {
             return current->value;
         }
         
@@ -540,12 +426,12 @@ public:
      * @return true si se eliminó, false si no existía
      */
     bool remove(const K& key) {
-        std::vector<Node*> update(maxPossibleLevel_ + 1, nullptr);
+        vector<Node*> update(maxPossibleLevel_ + 1, nullptr);
         Node* current = header_;
         
         for (int i = maxLevel_; i >= 0; i--) {
             while (current->forward[i] != nullptr && 
-                   comp_(current->forward[i]->key, key)) {
+                   current->forward[i]->key < key) {
                 current = current->forward[i];
             }
             update[i] = current;
@@ -553,7 +439,7 @@ public:
         
         current = current->forward[0];
         
-        if (current == nullptr || comp_(current->key, key) || comp_(key, current->key)) {
+        if (current == nullptr || current->key < key || key < current->key) {
             return false;
         }
         
@@ -630,59 +516,43 @@ public:
         return Iterator(nullptr);
     }
     
-    ConstIterator begin() const {
-        return ConstIterator(header_->forward[0]);
-    }
-    
-    ConstIterator end() const {
-        return ConstIterator(nullptr);
-    }
-    
-    ConstIterator cbegin() const {
-        return ConstIterator(header_->forward[0]);
-    }
-    
-    ConstIterator cend() const {
-        return ConstIterator(nullptr);
-    }
-    
     // ==================== UTILIDADES ====================
     
     /**
      * @brief Muestra la estructura de la skip list (debugging)
      */
     void display() const {
-        std::cout << "\n***** Skip List (size=" << size_ << ") *****\n";
+        cout << "\n***** Skip List (size=" << size_ << ") *****\n";
         for (int i = maxLevel_; i >= 0; i--) {
             Node* node = header_->forward[i];
-            std::cout << "Level " << i << ": ";
+            cout << "Level " << i << ": ";
             while (node != nullptr) {
-                std::cout << "[" << node->key << ":" << node->value << "] ";
+                cout << "[" << node->key << ":" << node->value << "] ";
                 node = node->forward[i];
             }
-            std::cout << std::endl;
+            cout << endl;
         }
-        std::cout << "*********************\n";
+        cout << "*********************\n";
     }
     
     /**
      * @brief Intercambia el contenido con otra skip list
      */
     void swap(SkipList& other) noexcept {
-        std::swap(header_, other.header_);
-        std::swap(maxLevel_, other.maxLevel_);
-        std::swap(maxPossibleLevel_, other.maxPossibleLevel_);
-        std::swap(probability_, other.probability_);
-        std::swap(size_, other.size_);
-        std::swap(comp_, other.comp_);
-        std::swap(rng_, other.rng_);
-        std::swap(dist_, other.dist_);
+        using std::swap;
+        swap(header_, other.header_);
+        swap(maxLevel_, other.maxLevel_);
+        swap(maxPossibleLevel_, other.maxPossibleLevel_);
+        swap(probability_, other.probability_);
+        swap(size_, other.size_);
+        swap(rng_, other.rng_);
+        swap(dist_, other.dist_);
     }
 };
 
 // Función global swap para ADL (Argument Dependent Lookup)
-template <typename K, typename V, typename Compare>
-void swap(SkipList<K, V, Compare>& a, SkipList<K, V, Compare>& b) noexcept {
+template <typename K, typename V>
+void swap(SkipList<K, V>& a, SkipList<K, V>& b) noexcept {
     a.swap(b);
 }
 

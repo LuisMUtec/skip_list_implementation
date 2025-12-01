@@ -56,16 +56,6 @@ void testCopyAndMove() {
     sl3 = sl1;
     cout << "Asignacion por copia. Size: " << sl3.size() << endl;
     
-    // Move constructor
-    SkipList<int, string> sl4(std::move(sl1));
-    cout << "Move constructor. Size sl4: " << sl4.size() 
-         << ", sl1 (movido): " << sl1.size() << endl;
-    
-    // Move assignment
-    SkipList<int, string> sl5;
-    sl5 = std::move(sl2);
-    cout << "Move assignment. Size sl5: " << sl5.size() 
-         << ", sl2 (movido): " << sl2.size() << endl;
 }
 
 void testIterators() {
@@ -212,11 +202,11 @@ void testSwap() {
     sl2.display();
 }
 
-void testCustomComparator() {
+void testCustomComparator() { //Nuestra implementacion solo lo ordena de menor a mayor. 
     cout << "\n========== TEST 9: Comparador Personalizado ==========" << endl;
     
     // Skip list con orden descendente
-    SkipList<int, string, greater<int>> sl;
+    SkipList<int, string> sl;
     
     sl.insert(5, "cinco");
     sl.insert(2, "dos");
