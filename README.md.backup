@@ -1,4 +1,4 @@
-# Skip List - Implementación en C++
+# Skip List - Implementación en C++# Skip List - Implementación en C++# Skip List - Implementación en C++# Skip List - Implementación en C++# Skip List
 
 
 
@@ -6,245 +6,400 @@ Implementación de Skip List en C++ siguiendo estándares modernos de C++11, bas
 
 
 
-## ¿Qué es una Skip List?
+## Implementación de Skip List en C++ siguiendo estándares modernos de C++11, basada en el trabajo original de William Pugh (1990).
 
 
 
-Una Skip List es una estructura de datos probabilística que permite búsquedas, inserciones y eliminaciones eficientes en tiempo **O(log n)** en promedio. Es una alternativa más simple a los árboles balanceados (AVL, Red-Black).
+Skip List es una estructura de datos probabilística que proporciona operaciones de búsqueda, inserción y eliminación con complejidad temporal esperada O(log n). Constituye una alternativa a los árboles balanceados tradicionales (AVL, Red-Black).## ¿Qué es?
 
 
 
-## Propiedades
+## Propiedades## Definición
 
 
 
 La estructura se caracteriza por:
 
-- Implementación simple que no requiere operaciones de rotaciónSkip List es una estructura de datos probabilística que proporciona operaciones de búsqueda, inserción y eliminación con complejidad temporal esperada O(log n). Constituye una alternativa a los árboles balanceados tradicionales (AVL, Red-Black).## ¿Qué es?
+
+
+- Implementación simple que no requiere operaciones de rotaciónSkip List es una estructura de datos probabilística que proporciona operaciones de búsqueda, inserción y eliminación con complejidad temporal esperada O(log n). Constituye una alternativa a los árboles balanceados tradicionales (AVL, Red-Black).
 
 - Balanceo automático mediante técnicas probabilísticas
 
-- Rendimiento eficiente en entornos concurrentes
+- Rendimiento eficiente en entornos concurrentesSkip List es una estructura de datos probabilística que permite operaciones en **O(log n)** promedio. Alternativa simple a árboles balanceados.
 
 - Complejidad espacial O(n) en el caso promedio
 
+## Propiedades
 
 ## Características de Implementación
 
-
+Una Skip List es una estructura de datos probabilística que permite búsquedas, inserciones y eliminaciones eficientes en tiempo **O(log n)** en promedio. Es una alternativa más simple a los árboles balanceados (AVL, Red-Black).
 
 Esta implementación incorpora las siguientes características técnicas:
 
+La estructura se caracteriza por:
+
 - **Regla de los Cinco**: Implementación completa de constructores de copia/movimiento y operadores de asignación
 
-- **Generación Aleatoria Moderna**: Utilización de `std::mt19937` para generación de números pseudoaleatorios de alta calidad
+- **Generación Aleatoria Moderna**: Utilización de std::mt19937 para generación de números pseudoaleatorios de alta calidad**Ventajas:**
 
 - **Iteradores Conformes a STL**: Iteradores forward tanto mutables como constantes
 
-- **Seguridad de Excepciones**: Validación exhaustiva de parámetros y garantías de seguridad de excepciones- Implementación simple que no requiere operaciones de rotaciónSkip List es una estructura de datos probabilística que proporciona operaciones de búsqueda, inserción y eliminación con complejidad temporal esperada O(log n). Constituye una alternativa a los árboles balanceados tradicionales (AVL, Red-Black).
+- **Seguridad de Excepciones**: Validación exhaustiva de parámetros y garantías de seguridad de excepciones- Implementación simple que no requiere operaciones de rotación
 
 - **Corrección de const**: Métodos const apropiados para garantizar inmutabilidad
 
-- **Interfaz Compatible con STL**: Métodos similares a `std::map` incluyendo `operator[]`, `at()`, y `contains()`- Balanceo automático mediante técnicas probabilísticas
+- **Interfaz Compatible con STL**: Métodos similares a std::map incluyendo operator[], at(), y contains()- Balanceo automático mediante técnicas probabilísticas- ✅ Implementación simple (sin rotaciones)
 
 
-
-### Ventajas sobre árboles balanceados:- Rendimiento eficiente en entornos concurrentesSkip List es una estructura de datos probabilística que permite operaciones en **O(log n)** promedio. Alternativa simple a árboles balanceados.
-
-
-
-- Más simple de implementar (no requiere rotaciones)- Complejidad espacial O(n) en el caso promedio
-
-- Mejor rendimiento en operaciones concurrentes
-
-- Código más fácil de entender y mantener## Propiedades
-
-
-### Instrucciones de Compilación
-
-```bash
-
-g++ -o skiplist main.cpp -std=c++11 -Wall -Wextra- **Iteradores Conformes a STL**: Iteradores forward tanto mutables como constantes
-
-./skiplist
-
-```- **Seguridad de Excepciones**: Validación exhaustiva de parámetros y garantías de seguridad de excepciones- Implementación simple que no requiere operaciones de rotación
-
-
-
-#### Windows (MSVC)- **Corrección de const**: Métodos const apropiados para garantizar inmutabilidad
-
-
-
-```bash- **Interfaz Compatible con STL**: Métodos similares a std::map incluyendo operator[], at(), y contains()- Balanceo automático mediante técnicas probabilísticas- ✅ Implementación simple (sin rotaciones)
-
-cl /EHsc main.cpp /std:c++14
-
-./main.exe
-
-```
 
 ## Compilación- Rendimiento eficiente en entornos concurrentes
 
-#### Linux/Mac
+
+
+### Requisitos- Complejidad espacial O(n) en el caso promedio- ✅ Excelente para concurrencia
+
+
+
+- Compilador compatible con C++11 o superior (g++, clang++, MSVC)
+
+
+
+### Instrucciones de Compilación## Características de Implementación- ✅ Balanceo automático probabilístico### Ventajas sobre árboles balanceados:## ¿Qué es una Skip List?## ¿Qué es una Skip List?
 
 
 
 ```bash
 
-g++ -o skiplist main.cpp -std=c++11 -Wall -Wextra### Requisitos- Complejidad espacial O(n) en el caso promedio- ✅ Excelente para concurrencia
-
-./skiplist
-
-```
-
-
-
-## Interfaz de Programación- Compilador compatible con C++11 o superior (g++, clang++, MSVC)
-
-
-
-### Ejemplo de Uso Básico
-
-
-
-```cpp### Instrucciones de Compilación## Características de Implementación- ✅ Balanceo automático probabilístico### Ventajas sobre árboles balanceados:## ¿Qué es una Skip List?## ¿Qué es una Skip List?
-
-#include "SkipList.h"
-
-
-
-SkipList<int, std::string> lista;
-
-```bash
-
-// Inserción
-
-lista.insert(5, "cinco");g++ -o skiplist main.cpp -std=c++11 -Wall -Wextra
-
-lista[10] = "diez";
+g++ -o skiplist main.cpp -std=c++11 -Wall -Wextra
 
 ./skiplistEsta implementación incorpora las siguientes características técnicas:
 
-// Búsqueda
+```
 
-std::string valor;```
 
-if (lista.search(5, valor)) {
-
-    // Elemento encontrado
-
-}
 
 ## Interfaz de Programación
 
-if (lista.contains(10)) {
-
-    // Verificación de existencia- **Regla de los Cinco**: Implementación completa de constructores de copia/movimiento y operadores de asignación## Características- ✅ Más simple de implementar (no requiere rotaciones)
-
-}
+- **Regla de los Cinco**: Implementación completa de constructores de copia/movimiento y operadores de asignación## Características- ✅ Más simple de implementar (no requiere rotaciones)
 
 ### Ejemplo de Uso Básico
 
-// Eliminación
-
-lista.remove(5);- **Generación Aleatoria Moderna**: Utilización de `std::mt19937` para generación de números pseudoaleatorios de alta calidad
-
-```
+- **Generación Aleatoria Moderna**: Utilización de `std::mt19937` para generación de números pseudoaleatorios de alta calidad
 
 ```cpp
 
-### Métodos Principales
-
 #include "SkipList.h"- **Iteradores Conformes a STL**: Iteradores forward tanto mutables como constantes
+
+
+
+SkipList<int, std::string> lista;- **Seguridad de Excepciones**: Validación exhaustiva de parámetros y garantías de seguridad de excepciones
+
+
+
+// Inserción- **Corrección de const**: Métodos const apropiados para garantizar inmutabilidad- **Regla de los 5**: Copy/Move semantics completos- ✅ Mejor rendimiento en operaciones concurrentes
+
+lista.insert(5, "cinco");
+
+lista[10] = "diez";- **Interfaz Compatible con STL**: Métodos similares a `std::map` incluyendo `operator[]`, `at()`, y `contains()`
+
+
+
+// Búsqueda- **std::mt19937**: Generador aleatorio moderno
+
+std::string valor;
+
+if (lista.search(5, valor)) {## Compilación
+
+    // Elemento encontrado
+
+}- **Iteradores**: Forward iterators (const y mutable)- ✅ Código más fácil de entender y mantener
+
+
+
+if (lista.contains(10)) {### Requisitos
+
+    // Verificación de existencia
+
+}- **Exception safety**: Validación completa
+
+
+
+// Eliminación- Compilador compatible con C++11 o superior (g++, clang++, MSVC)
+
+lista.remove(5);
+
+```- **Interfaz STL**: `operator[]`, `at()`, `contains()`, etc.- ✅ Balanceo automático vía aleatorizaciónUna Skip List es una estructura de datos probabilística que permite búsquedas, inserciones y eliminaciones eficientes en tiempo **O(log n)** en promedio. Es una alternativa más simple a los árboles balanceados (AVL, Red-Black).Una Skip List es una estructura de datos probabilística que permite búsquedas, inserciones y eliminaciones eficientes en tiempo **O(log n)** en promedio. Es una alternativa más simple a los árboles balanceados (como el AVL).
+
+
+
+### Métodos Principales### Instrucciones de Compilación
+
+
 
 | Método | Complejidad Temporal | Descripción |
 
 |--------|---------------------|-------------|
 
-| `insert(key, value)` | O(log n) | Inserta o actualiza un par clave-valor |
+| insert(key, value) | O(log n) | Inserta o actualiza un par clave-valor |```bash
 
-| `search(key, value)` | O(log n) | Busca un valor asociado a una clave |SkipList<int, std::string> lista;- **Seguridad de Excepciones**: Validación exhaustiva de parámetros y garantías de seguridad de excepciones
+| search(key, value) | O(log n) | Busca un valor asociado a una clave |
 
-| `contains(key)` | O(log n) | Verifica la existencia de una clave |
+| contains(key) | O(log n) | Verifica la existencia de una clave |g++ -o skiplist main.cpp -std=c++11 -Wall -Wextra## Compilación
 
-| `at(key)` | O(log n) | Acceso con verificación de límites |
+| at(key) | O(log n) | Acceso con verificación de límites |
 
-| `operator[](key)` | O(log n) | Acceso o inserción estilo asociativo |
+| operator[](key) | O(log n) | Acceso o inserción estilo asociativo |./skiplist
 
-| `remove(key)` | O(log n) | Elimina un elemento |// Inserción- **Corrección de const**: Métodos const apropiados para garantizar inmutabilidad- **Regla de los 5**: Copy/Move semantics completos- ✅ Mejor rendimiento en operaciones concurrentes
+| remove(key) | O(log n) | Elimina un elemento |
 
-| `size()` | O(1) | Retorna el número de elementos |
+| size() | O(1) | Retorna el número de elementos |```
 
-| `clear()` | O(n) | Elimina todos los elementos |lista.insert(5, "cinco");
-
-
-
-### Características Avanzadaslista[10] = "diez";- **Interfaz Compatible con STL**: Métodos similares a `std::map` incluyendo `operator[]`, `at()`, y `contains()`
+| clear() | O(n) | Elimina todos los elementos |
 
 
+
+### Características Avanzadas
+
+## Interfaz de Programación```bash## Características
 
 #### Iteradores
 
 
 
-```cpp// Búsqueda- **std::mt19937**: Generador aleatorio moderno
+```cpp
 
-for (auto it = lista.begin(); it != lista.end(); ++it) {
+for (auto it = lista.begin(); it != lista.end(); ++it) {### Ejemplo de Uso Básicog++ -o skiplist main.cpp -std=c++11
 
-    std::cout << it.key() << " : " << it.value() << "\n";std::string valor;
+    std::cout << it.key() << " : " << it.value() << "\n";
 
 }
 
-```if (lista.search(5, valor)) {## Compilación
+```
 
+```cpp./skiplist
 
+#### Semántica de Copia y Movimiento
 
-#### Semántica de Copia y Movimiento    // Elemento encontrado
+#include "SkipList.h"
 
+```cpp
 
-
-```cpp}- **Iteradores**: Forward iterators (const y mutable)- ✅ Código más fácil de entender y mantener
-
-SkipList<int, int> lista1;
+SkipList<int, int> lista1;```
 
 SkipList<int, int> lista2(lista1);           // Copia profunda
 
-SkipList<int, int> lista3(std::move(lista1)); // Transferencia de propiedad
-
-```if (lista.contains(10)) {### Requisitos
-
-
-
-#### Comparador Personalizado    // Verificación de existencia
-
-
-
-```cpp}- **Exception safety**: Validación completa
-
-SkipList<int, std::string, std::greater<int>> listaDesc;
+SkipList<int, int> lista3(std::move(lista1)); // Transferencia de propiedadSkipList<int, std::string> lista;
 
 ```
 
+### Características Profesionales:### Ventajas sobre árboles balanceados:## Características
 
+#### Comparador Personalizado
 
-#### Construcción In-Place// Eliminación- Compilador compatible con C++11 o superior (g++, clang++, MSVC)
+// Inserción
 
+```cpp
 
+SkipList<int, std::string, std::greater<int>> listaDesc;lista.insert(5, "cinco");## Uso Básico
 
-```cpplista.remove(5);
+```
 
-lista.emplace(1, 5, 'X'); // Construye el valor directamente en la estructura
+lista[10] = "diez";
 
-``````- **Interfaz STL**: `operator[]`, `at()`, `contains()`, etc.- ✅ Balanceo automático vía aleatorizaciónUna Skip List es una estructura de datos probabilística que permite búsquedas, inserciones y eliminaciones eficientes en tiempo **O(log n)** en promedio. Es una alternativa más simple a los árboles balanceados (AVL, Red-Black).Una Skip List es una estructura de datos probabilística que permite búsquedas, inserciones y eliminaciones eficientes en tiempo **O(log n)** en promedio. Es una alternativa más simple a los árboles balanceados (como el AVL).
+#### Construcción In-Place
 
+- **Regla de los 5**: Copy/Move constructors y assignment operators
 
+```cpp
+
+lista.emplace(1, 5, 'X'); // Construye el valor directamente en la estructura// Búsqueda
+
+```
+
+std::string valor;```cpp
 
 ## Análisis de Complejidad
 
+if (lista.search(5, valor)) {
+
+### Complejidad Temporal
+
+    // Elemento encontrado#include "SkipList.h"- **Generador aleatorio moderno**: `std::mt19937` (thread-safe)- ✅ Más simple de implementar (no requiere rotaciones)
+
+| Operación | Caso Promedio | Peor Caso |
+
+|-----------|---------------|-----------|}
+
+| Búsqueda | O(log n) | O(n) |
+
+| Inserción | O(log n) | O(n) |
+
+| Eliminación | O(log n) | O(n) |
+
+if (lista.contains(10)) {
+
+### Complejidad Espacial
+
+    // Verificación de existenciaSkipList<int, std::string> sl;- **Iteradores completos**: Forward iterators (const y mutable)
+
+| Métrica | Caso Promedio | Peor Caso |
+
+|---------|---------------|-----------|}
+
+| Espacio | O(n) | O(n log n) |
 
 
-### Complejidad Temporal### Métodos Principales### Instrucciones de Compilación
+
+## Validación
+
+// Eliminación
+
+El archivo main.cpp contiene una suite de pruebas exhaustiva que verifica:
+
+lista.remove(5);// Inserción- **Exception safety**: Validación de parámetros y manejo de errores- ✅ Mejor rendimiento en operaciones concurrentes- **Template genérico**: Funciona con cualquier tipo de clave y valor
+
+1. Operaciones básicas de inserción, búsqueda y eliminación
+
+2. Semántica de copia y movimiento```
+
+3. Funcionamiento de iteradores
+
+4. Operadores de acceso estilo mapasl.insert(5, "cinco");
+
+5. Manejo de excepciones
+
+6. Construcción in-place### Métodos Principales
+
+7. Intercambio de estructuras
+
+8. Comparadores personalizadossl[10] = "diez";           // Estilo map- **Const-correctness**: Métodos const apropiados
+
+9. Rendimiento con conjuntos de datos grandes (10,000 elementos)
+
+| Método | Complejidad Temporal | Descripción |
+
+## Comparación con Estructuras Alternativas
+
+|--------|---------------------|-------------|
+
+### vs. std::map (Árbol Red-Black)
+
+| `insert(key, value)` | O(log n) | Inserta o actualiza un par clave-valor |
+
+- Ventaja: Implementación más simple, sin necesidad de operaciones de rebalanceo complejas
+
+- Ventaja: Mejor rendimiento en escenarios concurrentes| `search(key, value)` | O(log n) | Busca un valor asociado a una clave |// Búsqueda- **Type traits**: Validación en tiempo de compilación- ✅ Código más fácil de entender y mantener- **Operaciones eficientes**: O(log n) en promedio para búsqueda, inserción y eliminación
+
+- Desventaja: Complejidad temporal no determinística (probabilística)
+
+| `contains(key)` | O(log n) | Verifica la existencia de una clave |
+
+### vs. std::unordered_map (Tabla Hash)
+
+| `at(key)` | O(log n) | Acceso con verificación de límites |std::string val;
+
+- Ventaja: Mantiene elementos ordenados, permite iteración en orden
+
+- Ventaja: No requiere función hash| `operator[](key)` | O(log n) | Acceso o inserción estilo asociativo |
+
+- Desventaja: Búsqueda ligeramente más lenta en promedio
+
+| `remove(key)` | O(log n) | Elimina un elemento |if (sl.search(5, val)) { }- **Compilación limpia**: Sin warnings con `-Wall -Wextra`
+
+## Aplicaciones
+
+| `size()` | O(1) | Retorna el número de elementos |
+
+Esta estructura de datos es particularmente adecuada para:
+
+| `clear()` | O(n) | Elimina todos los elementos |if (sl.contains(10)) { }
+
+- Implementación de índices en sistemas de bases de datos
+
+- Cachés con políticas de reemplazo basadas en orden
+
+- Colas de prioridad en schedulers
+
+- Sistemas distribuidos que requieren sincronización eficiente### Características Avanzadas- ✅ Balanceo automático via aleatorización- **Probabilístico**: Usa aleatorización para determinar los niveles de los nodos
+
+
+
+## Referencias
+
+
+
+Pugh, W. (1990). "Skip Lists: A Probabilistic Alternative to Balanced Trees". *Communications of the ACM*, 33(6), 668-676.#### Iteradores// Eliminación
+
+
+
+## Autor
+
+
+
+Luis Fernando```cppsl.remove(5);### API Completa:
+
+
+
+## Licenciafor (auto it = lista.begin(); it != lista.end(); ++it) {
+
+
+
+MIT License - Permitido uso académico y comercial    std::cout << it.key() << " : " << it.value() << "\n";```
+
+
+}
+
+```- `insert()` / `emplace()` - Inserción eficiente- : Más simple que árboles AVL o Red-Black
+
+
+
+#### Semántica de Copia y Movimiento## API Principal
+
+
+
+```cpp- `search()` / `contains()` - Búsqueda
+
+SkipList<int, int> lista1;
+
+SkipList<int, int> lista2(lista1);           // Copia profunda| Método | Complejidad | Descripción |
+
+SkipList<int, int> lista3(std::move(lista1)); // Transferencia de propiedad
+
+```|--------|-------------|-------------|- `at()` / `operator[]` - Acceso tipo `std::map`
+
+
+
+#### Comparador Personalizado| `insert(key, value)` | O(log n) | Inserta o actualiza |
+
+
+
+```cpp| `search(key, value)` | O(log n) | Busca valor |- `remove()` / `erase()` - Eliminación
+
+SkipList<int, std::string, std::greater<int>> listaDesc;
+
+```| `contains(key)` | O(log n) | Verifica existencia |
+
+
+
+#### Construcción In-Place| `at(key)` | O(log n) | Acceso seguro (excepción) |- `begin()` / `end()` - Iteradores## Estructura del Proyecto
+
+
+
+```cpp| `operator[](key)` | O(log n) | Acceso/inserción |
+
+lista.emplace(1, 5, 'X'); // Construye el valor directamente en la estructura
+
+```| `remove(key)` | O(log n) | Elimina elemento |- `size()` / `empty()` / `clear()` - Utilidades
+
+
+
+## Análisis de Complejidad| `size()` | O(1) | Número de elementos |
+
+
+
+### Complejidad Temporal| `clear()` | O(n) | Vacía la lista |- `swap()` - Intercambio eficiente### Características Profesionales:
 
 
 
@@ -252,557 +407,12 @@ lista.emplace(1, 5, 'X'); // Construye el valor directamente en la estructura
 
 |-----------|---------------|-----------|
 
-| Búsqueda | O(log n) | O(n) || Método | Complejidad Temporal | Descripción |
+| Búsqueda | O(log n) | O(n) |## Características Avanzadas- `display()` - Visualización para debugging
 
 | Inserción | O(log n) | O(n) |
 
-| Eliminación | O(log n) | O(n) ||--------|---------------------|-------------|
+| Eliminación | O(log n) | O(n) |
 
-
-
-### Complejidad Espacial| insert(key, value) | O(log n) | Inserta o actualiza un par clave-valor |```bash
-
-
-
-| Métrica | Caso Promedio | Peor Caso || search(key, value) | O(log n) | Busca un valor asociado a una clave |
-
-|---------|---------------|-----------|
-
-| Espacio | O(n) | O(n log n) || contains(key) | O(log n) | Verifica la existencia de una clave |g++ -o skiplist main.cpp -std=c++11 -Wall -Wextra## Compilación
-
-
-
-## Validación| at(key) | O(log n) | Acceso con verificación de límites |
-
-
-
-El archivo `main.cpp` contiene una suite de pruebas exhaustiva que verifica:| operator[](key) | O(log n) | Acceso o inserción estilo asociativo |./skiplist
-
-
-
-1. Operaciones básicas de inserción, búsqueda y eliminación| remove(key) | O(log n) | Elimina un elemento |
-
-2. Semántica de copia y movimiento
-
-3. Funcionamiento de iteradores| size() | O(1) | Retorna el número de elementos |```
-
-4. Operadores de acceso estilo mapa
-
-5. Manejo de excepciones| clear() | O(n) | Elimina todos los elementos |
-
-6. Construcción in-place
-
-7. Intercambio de estructuras
-
-8. Comparadores personalizados
-
-9. Rendimiento con conjuntos de datos grandes (10,000 elementos)### Características Avanzadas
-
-
-
-## Comparación con Estructuras Alternativas## Interfaz de Programación```bash## Características
-
-
-
-### vs. std::map (Árbol Red-Black)#### Iteradores
-
-
-
-- Ventaja: Implementación más simple, sin necesidad de operaciones de rebalanceo complejas
-
-- Ventaja: Mejor rendimiento en escenarios concurrentes
-
-- Desventaja: Complejidad temporal no determinística (probabilística)```cpp
-
-
-
-### vs. std::unordered_map (Tabla Hash)for (auto it = lista.begin(); it != lista.end(); ++it) {### Ejemplo de Uso Básicog++ -o skiplist main.cpp -std=c++11
-
-
-
-- Ventaja: Mantiene elementos ordenados, permite iteración en orden    std::cout << it.key() << " : " << it.value() << "\n";
-
-- Ventaja: No requiere función hash
-
-- Desventaja: Búsqueda ligeramente más lenta en promedio}
-
-
-
-## Aplicaciones```
-
-
-
-Esta estructura de datos es particularmente adecuada para:```cpp./skiplist
-
-
-
-- Implementación de índices en sistemas de bases de datos#### Semántica de Copia y Movimiento
-
-- Cachés con políticas de reemplazo basadas en orden
-
-- Colas de prioridad en schedulers#include "SkipList.h"
-
-- Sistemas distribuidos que requieren sincronización eficiente
-
-```cpp
-
-## Estructura del Proyecto
-
-SkipList<int, int> lista1;```
-
-```
-
-skip_list_implementation/SkipList<int, int> lista2(lista1);           // Copia profunda
-
-├── SkipList.h       # Implementación completa (header-only)
-
-├── main.cpp         # Suite de pruebas y demostraciónSkipList<int, int> lista3(std::move(lista1)); // Transferencia de propiedadSkipList<int, std::string> lista;
-
-├── README.md        # Este archivo
-
-└── COMPARACION.md   # Comparación de características```
-
-```
-
-### Características Profesionales:### Ventajas sobre árboles balanceados:## Características
-
-## Ejemplos de Uso
-
-#### Comparador Personalizado
-
-### Ejemplo Básico
-
-// Inserción
-
-```cpp
-
-#include "SkipList.h"```cpp
-
-#include <iostream>
-
-#include <string>SkipList<int, std::string, std::greater<int>> listaDesc;lista.insert(5, "cinco");## Uso Básico
-
-
-
-int main() {```
-
-    // Crear una Skip List de int -> string
-
-    SkipList<int, std::string> sl;lista[10] = "diez";
-
-    
-
-    // Insertar elementos#### Construcción In-Place
-
-    sl.insert(5, "cinco");
-
-    sl.insert(10, "diez");- **Regla de los 5**: Copy/Move constructors y assignment operators
-
-    sl.insert(3, "tres");
-
-    ```cpp
-
-    // Buscar elementos
-
-    std::string value;lista.emplace(1, 5, 'X'); // Construye el valor directamente en la estructura// Búsqueda
-
-    if (sl.search(5, value)) {
-
-        std::cout << "Encontrado: " << value << std::endl;```
-
-    }
-
-    std::string valor;```cpp
-
-    // Verificar existencia
-
-    if (sl.contains(10)) {## Análisis de Complejidad
-
-        std::cout << "10 existe" << std::endl;
-
-    }if (lista.search(5, valor)) {
-
-    
-
-    // Eliminar elementos### Complejidad Temporal
-
-    sl.remove(5);
-
-        // Elemento encontrado#include "SkipList.h"- **Generador aleatorio moderno**: `std::mt19937` (thread-safe)- ✅ Más simple de implementar (no requiere rotaciones)
-
-    // Mostrar estructura
-
-    sl.display();| Operación | Caso Promedio | Peor Caso |
-
-    
-
-    return 0;|-----------|---------------|-----------|}
-
-}
-
-```| Búsqueda | O(log n) | O(n) |
-
-
-
-### Uso Avanzado - Estilo std::map| Inserción | O(log n) | O(n) |
-
-
-
-```cpp| Eliminación | O(log n) | O(n) |
-
-// Usar como std::map
-
-SkipList<std::string, int> edades;if (lista.contains(10)) {
-
-
-
-// operator[] para inserción/acceso### Complejidad Espacial
-
-edades["Alice"] = 25;
-
-edades["Bob"] = 30;    // Verificación de existenciaSkipList<int, std::string> sl;- **Iteradores completos**: Forward iterators (const y mutable)
-
-edades["Charlie"] = 22;
-
-| Métrica | Caso Promedio | Peor Caso |
-
-// Acceso seguro con at() (lanza excepción si no existe)
-
-try {|---------|---------------|-----------|}
-
-    int edad = edades.at("Alice");
-
-    std::cout << "Edad de Alice: " << edad << std::endl;| Espacio | O(n) | O(n log n) |
-
-} catch (const std::out_of_range& e) {
-
-    std::cout << "No encontrado" << std::endl;
-
-}
-
-## Validación
-
-// Iteradores
-
-for (auto it = edades.begin(); it != edades.end(); ++it) {// Eliminación
-
-    std::cout << it.key() << ": " << it.value() << std::endl;
-
-}El archivo main.cpp contiene una suite de pruebas exhaustiva que verifica:
-
-```
-
-lista.remove(5);// Inserción- **Exception safety**: Validación de parámetros y manejo de errores- ✅ Mejor rendimiento en operaciones concurrentes- **Template genérico**: Funciona con cualquier tipo de clave y valor
-
-### Copy y Move Semantics
-
-1. Operaciones básicas de inserción, búsqueda y eliminación
-
-```cpp
-
-// Constructor de copia2. Semántica de copia y movimiento```
-
-SkipList<int, std::string> sl1;
-
-sl1.insert(1, "uno");3. Funcionamiento de iteradores
-
-sl1.insert(2, "dos");
-
-4. Operadores de acceso estilo mapasl.insert(5, "cinco");
-
-SkipList<int, std::string> sl2(sl1);  // Copia profunda
-
-5. Manejo de excepciones
-
-// Move constructor
-
-SkipList<int, std::string> sl3(std::move(sl1));  // Movimiento eficiente6. Construcción in-place### Métodos Principales
-
-```
-
-7. Intercambio de estructuras
-
-### Comparador Personalizado
-
-8. Comparadores personalizadossl[10] = "diez";           // Estilo map- **Const-correctness**: Métodos const apropiados
-
-```cpp
-
-// Orden descendente9. Rendimiento con conjuntos de datos grandes (10,000 elementos)
-
-SkipList<int, std::string, std::greater<int>> desc;
-
-desc.insert(5, "cinco");| Método | Complejidad Temporal | Descripción |
-
-desc.insert(2, "dos");
-
-desc.insert(8, "ocho");## Comparación con Estructuras Alternativas
-
-
-
-// Los elementos estarán en orden: 8, 5, 2|--------|---------------------|-------------|
-
-```
-
-### vs. std::map (Árbol Red-Black)
-
-### Emplace (Construcción in-place)
-
-| `insert(key, value)` | O(log n) | Inserta o actualiza un par clave-valor |
-
-```cpp
-
-SkipList<int, std::string> sl;- Ventaja: Implementación más simple, sin necesidad de operaciones de rebalanceo complejas
-
-
-
-// Construye el string in-place- Ventaja: Mejor rendimiento en escenarios concurrentes| `search(key, value)` | O(log n) | Busca un valor asociado a una clave |// Búsqueda- **Type traits**: Validación en tiempo de compilación- ✅ Código más fácil de entender y mantener- **Operaciones eficientes**: O(log n) en promedio para búsqueda, inserción y eliminación
-
-sl.emplace(1, "Hello");
-
-sl.emplace(2, 5, 'X');  // string(5, 'X') = "XXXXX"- Desventaja: Complejidad temporal no determinística (probabilística)
-
-```
-
-| `contains(key)` | O(log n) | Verifica la existencia de una clave |
-
-## API Completa
-
-### vs. std::unordered_map (Tabla Hash)
-
-### Constructor
-
-| `at(key)` | O(log n) | Acceso con verificación de límites |std::string val;
-
-```cpp
-
-SkipList(int maxLevel = 16, - Ventaja: Mantiene elementos ordenados, permite iteración en orden
-
-         float probability = 0.5f,
-
-         const Compare& comp = Compare())- Ventaja: No requiere función hash| `operator[](key)` | O(log n) | Acceso o inserción estilo asociativo |
-
-```
-
-- Desventaja: Búsqueda ligeramente más lenta en promedio
-
-**Parámetros:**
-
-- `maxLevel`: Nivel máximo permitido (1-32)| `remove(key)` | O(log n) | Elimina un elemento |if (sl.search(5, val)) { }- **Compilación limpia**: Sin warnings con `-Wall -Wextra`
-
-- `probability`: Probabilidad de promoción (0-1, típicamente 0.5)
-
-- `comp`: Comparador personalizado## Aplicaciones
-
-
-
-### Métodos Principales| `size()` | O(1) | Retorna el número de elementos |
-
-
-
-| Método | Complejidad | Descripción |Esta estructura de datos es particularmente adecuada para:
-
-|--------|-------------|-------------|
-
-| `insert(key, value)` | O(log n) | Inserta o actualiza || `clear()` | O(n) | Elimina todos los elementos |if (sl.contains(10)) { }
-
-| `emplace(key, args...)` | O(log n) | Construye e inserta in-place |
-
-| `search(key, value)` | O(log n) | Busca y retorna valor |- Implementación de índices en sistemas de bases de datos
-
-| `contains(key)` | O(log n) | Verifica existencia |
-
-| `at(key)` | O(log n) | Acceso seguro (lanza excepción) |- Cachés con políticas de reemplazo basadas en orden
-
-| `operator[](key)` | O(log n) | Acceso/inserción estilo mapa |
-
-| `remove(key)` | O(log n) | Elimina elemento |- Colas de prioridad en schedulers
-
-| `erase(key)` | O(log n) | Alias de remove() |
-
-| `size()` | O(1) | Número de elementos |- Sistemas distribuidos que requieren sincronización eficiente### Características Avanzadas- ✅ Balanceo automático via aleatorización- **Probabilístico**: Usa aleatorización para determinar los niveles de los nodos
-
-| `empty()` | O(1) | Verifica si está vacía |
-
-| `clear()` | O(n) | Elimina todos los elementos |
-
-| `swap(other)` | O(1) | Intercambia con otra lista |
-
-| `display()` | O(n) | Muestra estructura (debug) |## Referencias
-
-
-
-### Iteradores
-
-
-
-```cppPugh, W. (1990). "Skip Lists: A Probabilistic Alternative to Balanced Trees". *Communications of the ACM*, 33(6), 668-676.#### Iteradores// Eliminación
-
-Iterator begin();
-
-Iterator end();
-
-ConstIterator cbegin() const;
-
-ConstIterator cend() const;## Autor
-
-```
-
-
-
-## Tests Incluidos
-
-Luis Fernando```cppsl.remove(5);### API Completa:
-
-El archivo `main.cpp` incluye 10 tests exhaustivos:
-
-
-
-1. Operaciones básicas (insert, search, remove)
-
-2. Copy & Move semantics## Licenciafor (auto it = lista.begin(); it != lista.end(); ++it) {
-
-3. Iteradores y modificación de valores
-
-4. operator[] (estilo std::map)
-
-5. at() con excepciones
-
-6. Exception safety y validacionesMIT License - Permitido uso académico y comercial    std::cout << it.key() << " : " << it.value() << "\n";```
-
-7. emplace() (construcción in-place)
-
-8. swap() entre listas
-
-9. Comparador personalizado}
-
-10. Dataset grande (10,000 elementos)
-
-```- `insert()` / `emplace()` - Inserción eficiente- : Más simple que árboles AVL o Red-Black
-
-## Complejidad
-
-
-
-| Operación | Promedio | Peor Caso | Espacio |
-
-|-----------|----------|-----------|---------|#### Semántica de Copia y Movimiento## API Principal
-
-| Búsqueda  | O(log n) | O(n) | - |
-
-| Inserción | O(log n) | O(n) | - |
-
-| Eliminación | O(log n) | O(n) | - |
-
-| Espacio total | O(n) | O(n log n) | O(n) |```cpp- `search()` / `contains()` - Búsqueda
-
-
-
-## Ventajas de esta ImplementaciónSkipList<int, int> lista1;
-
-
-
-### vs Implementaciones Básicas:SkipList<int, int> lista2(lista1);           // Copia profunda| Método | Complejidad | Descripción |
-
-- Thread-safe random generation (cada instancia tiene su generador)
-
-- Se puede copiar y mover de forma seguraSkipList<int, int> lista3(std::move(lista1)); // Transferencia de propiedad
-
-- Validación de parámetros y manejo de errores
-
-- Interfaz compatible con STL```|--------|-------------|-------------|- `at()` / `operator[]` - Acceso tipo `std::map`
-
-- Iteradores para usar con algoritmos STL
-
-
-
-### vs std::map:
-
-- Más simple de implementar#### Comparador Personalizado| `insert(key, value)` | O(log n) | Inserta o actualiza |
-
-- Mejor rendimiento en inserciones concurrentes
-
-- No requiere rebalanceo complejo
-
-- Rendimiento probabilístico (no garantizado)
-
-```cpp| `search(key, value)` | O(log n) | Busca valor |- `remove()` / `erase()` - Eliminación
-
-### vs std::unordered_map:
-
-- Mantiene elementos ordenadosSkipList<int, std::string, std::greater<int>> listaDesc;
-
-- No requiere función hash
-
-- Mejor en iteraciones ordenadas```| `contains(key)` | O(log n) | Verifica existencia |
-
-- Búsqueda ligeramente más lenta
-
-
-
-## Recursos Adicionales
-
-#### Construcción In-Place| `at(key)` | O(log n) | Acceso seguro (excepción) |- `begin()` / `end()` - Iteradores## Estructura del Proyecto
-
-- `COMPARACION.md` - Comparación detallada de características
-
-- William Pugh, "Skip Lists: A Probabilistic Alternative to Balanced Trees" (1990)
-
-
-
-## Autor```cpp| `operator[](key)` | O(log n) | Acceso/inserción |
-
-
-
-Luis Fernandolista.emplace(1, 5, 'X'); // Construye el valor directamente en la estructura
-
-
-
-## Licencia```| `remove(key)` | O(log n) | Elimina elemento |- `size()` / `empty()` / `clear()` - Utilidades
-
-
-
-MIT License - Libre para uso educativo y comercial
-
-
-
----## Análisis de Complejidad| `size()` | O(1) | Número de elementos |
-
-
-
-## Casos de Uso Ideales
-
-
-
-- **Sistemas de bases de datos**: Índices ordenados### Complejidad Temporal| `clear()` | O(n) | Vacía la lista |- `swap()` - Intercambio eficiente### Características Profesionales:
-
-- **Caches**: LRU con acceso ordenado
-
-- **Schedulers**: Colas de prioridad
-
-- **Sistemas distribuidos**: Fácil de implementar de forma concurrente
-
-- **Aprendizaje**: Excelente para entender estructuras probabilísticas| Operación | Caso Promedio | Peor Caso |
-
-
-
----|-----------|---------------|-----------|
-
-
-
-**¿Por qué usar Skip List?**| Búsqueda | O(log n) | O(n) |## Características Avanzadas- `display()` - Visualización para debugging
-
-
-
-> "Si necesitas una estructura ordenada y el árbol balanceado te parece demasiado complejo, Skip List es tu mejor opción."| Inserción | O(log n) | O(n) |
-
-
-
----| Eliminación | O(log n) | O(n) |
-
-
-
-Para preguntas o sugerencias, consulta la documentación inline en `SkipList.h`.
 
 
 ### Complejidad Espacial```cpp- **Regla de los 5**: Copy/Move constructors y assignment operators```
