@@ -9,7 +9,7 @@ void testBasicOperations() {
     cout << "\n========== TEST 1: Operaciones Basicas ==========" << endl;
     
     SkipList<int, string> sl;
-    
+     
     // Inserción
     sl.insert(5, "cinco");
     sl.insert(10, "diez");
